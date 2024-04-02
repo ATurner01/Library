@@ -8,9 +8,21 @@
 
         public AccountController(Account account, string path) 
         {
-            _account = account;
+            _account = account;  //temp
+            //_account = LogIn();
             _database = new ReadDatabase(path);
         }
+
+        public bool LogIn()
+        {
+            return false;
+        }
+
+        public bool LogOut()
+        {
+            return false;
+        }
+
         public ICollection<Book> ViewBooks()
         {
             var books = _database.GetOwnedBooks(_account);

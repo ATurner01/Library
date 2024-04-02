@@ -12,6 +12,16 @@
             _bookController = new(path);
         } 
 
+        public void LogIn()
+        {
+            
+        }
+
+        public void LogOut()
+        {
+            
+        }
+
         public void DisplayUI()
         {
             Console.WriteLine("Library System");
@@ -21,7 +31,8 @@
             Console.WriteLine("2. View borrowed books");
             Console.WriteLine("3. Withdraw book");
             Console.WriteLine("4. Return books");
-            Console.WriteLine("5. Exit program");
+            Console.WriteLine("5. Logout");
+            Console.WriteLine("6. Exit program");
         }
 
         public int UpdateUI()
@@ -42,6 +53,9 @@
                     Console.WriteLine("temp");
                     break;
                 case "5":
+                    Console.WriteLine("temp");
+                    break;
+                case "6":
                     Console.WriteLine("Exiting...");
                     return -1;
                 default:
