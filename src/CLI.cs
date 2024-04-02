@@ -50,7 +50,7 @@
                     WithdrawBook();
                     break;
                 case "4":
-                    Console.WriteLine("temp");
+                    ReturnBook();
                     break;
                 case "5":
                     Console.WriteLine("temp");
@@ -100,30 +100,7 @@
         private void WithdrawBook()
         {
             Console.WriteLine("Please enter the book ID: ");
-            var isValid = false;
-            int bookID = default;
-            do
-            {
-                var value = Console.ReadLine();
-
-                try
-                {
-                    bookID = Int32.Parse(value!);
-                    isValid = true;
-                }
-                catch (ArgumentNullException)
-                {
-                    Console.WriteLine("Please enter a value");
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Please enter a valid whole number");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            } while (!isValid);
+            int bookID = ValidateIntInput();
 
             var book = _bookController.GetBook(bookID);
 
@@ -142,6 +119,60 @@
                     Console.WriteLine("You already own this book");
                 }
             }
+        }
+
+        private static int ValidateIntInput()
+        {
+            var isValid = false;
+            int input = default;
+            do
+            {
+                var value = Console.ReadLine();
+
+                try
+                {
+                    input = Int32.Parse(value!);
+                    isValid = true;
+                }
+                catch (ArgumentNullException)
+                {
+                    Console.WriteLine("Please enter a value");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please enter a valid whole number");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            } while (!isValid);
+            return input;
+        }
+
+        public void ReturnBook()
+        {
+            Console.WriteLine("Please enter the ID of the book you wish to return: ");
+
+            int bookID = ValidateIntInput();
+            var book = _bookController.GetBook(bookID);
+
+            if (book == null)
+            {
+                Console.WriteLine($"Book {bookID} does not exist");
+            }
+            else
+            {
+                try
+                {
+                    _accController.ReturnBook(book);
+                } catch (ArgumentException)
+                {
+                    Console.WriteLine("You do not own that book");
+                }
+            }
+
+
         }
     }
 }

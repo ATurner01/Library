@@ -40,9 +40,15 @@
             }
         }
 
-        public void ReturnBook()
+        public void ReturnBook(Book book)
         {
-
+            try
+            {
+                _database.RemoveBook(_account, book);
+            } catch (Exception) 
+            {
+                throw;
+            }
         }
     }
 }

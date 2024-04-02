@@ -41,6 +41,7 @@ namespace Library.src
         public ICollection<Book> Books { get; } = new List<Book>();
     }
 
+    //TODO: Update to include current number of available books
     public class Book
     {
         public int BookId { get; set; }

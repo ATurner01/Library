@@ -116,6 +116,16 @@ namespace Library.src
             return account.Books;
         }
 
+        //TODO: Do this properly. Currently just deletes book from account, doesn't update "stock" (need to add that too)
+        public void RemoveBook(Account account, Book book)
+        {
+            using var context = new LibraryContext(_dbPath);
+
+            Book? bookRef = account.Books.FirstOrDefault(b => b.BookId == book.BookId) ?? throw new ArgumentException("Account does not possess this book");
+
+            account.Books.Remove(bookRef);
+        }
+
         /// <summary>
         /// Saves all changes made to an account. This should only be called whenever the account is logged out to avoid unnecessary data I/O
         /// </summary>
