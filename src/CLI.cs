@@ -101,7 +101,7 @@
 
         private void WithdrawBook()
         {
-            Console.WriteLine("Please enter the book ID: ");
+            Console.WriteLine("Please enter the book ID: (-1 to go back)");
             int bookID = ValidateIntInput();
 
             if (bookID == -1)
@@ -160,7 +160,7 @@
 
         public void ReturnBook()
         {
-            Console.WriteLine("Please enter the ID of the book you wish to return: ");
+            Console.WriteLine("Please enter the ID of the book you wish to return: (-1 to go back)");
 
             int bookID = ValidateIntInput();
 
@@ -181,9 +181,9 @@
                 try
                 {
                     _accController.ReturnBook(book);
-                } catch (ArgumentException)
+                } catch (ArgumentException e)
                 {
-                    Console.WriteLine("You do not own that book");
+                    Console.WriteLine(e.Message);
                 }
             }
 

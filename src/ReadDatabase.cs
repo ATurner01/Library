@@ -129,6 +129,14 @@ namespace Library.src
             return account.Books;
         }
 
+        /// <summary>
+        /// Returns the given book to the library and removes it from the account
+        /// </summary>
+        /// <param name="account">The account currently logged in</param>
+        /// <param name="book">The book to be returned</param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the account does not possess the book that is being returned
+        /// </exception>
         public void RemoveBook(Account account, Book book)
         {
             using var context = new LibraryContext(_dbPath);
