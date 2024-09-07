@@ -122,9 +122,9 @@
                 {
                     _accController.WithdrawBook(book);
                 }
-                catch (ArgumentException)
+                catch (ArgumentException e)
                 {
-                    Console.WriteLine("You already own this book");
+                    Console.WriteLine(e.Message);
                 }
             }
         }

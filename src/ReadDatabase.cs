@@ -93,11 +93,22 @@ namespace Library.src
         {
             using var context = new LibraryContext(_dbPath);
             context.Accounts.Attach(account);
-            context.Books.Attach(book);
+            //context.Books.Attach(book);
 
             if (account.Books.FirstOrDefault(b => b.BookId == book.BookId) != null)
             {
                 throw new ArgumentException("Account cannot have multiple of the same books");
+            }
+
+            if (!book.Available)
+            {
+                throw new ArgumentException("Book is currently not in stock");
+            }
+
+            book.Stock -= 1;
+            if (book.Stock <= 0 && book.Available)
+            {
+                book.Available = false;
             }
 
             account.Books.Add(book);
@@ -118,13 +129,18 @@ namespace Library.src
             return account.Books;
         }
 
-        //TODO: Do this properly. Currently removes relationship between account and book, doesn't update "stock" (need to add that too)
         public void RemoveBook(Account account, Book book)
         {
             using var context = new LibraryContext(_dbPath);
             context.Accounts.Attach(account);
 
             Book? bookRef = account.Books.FirstOrDefault(b => b.BookId == book.BookId) ?? throw new ArgumentException("Account does not possess this book");
+
+            bookRef.Stock += 1;
+            if (!bookRef.Available)
+            {
+                bookRef.Available = true;
+            }
 
             account.Books.Remove(bookRef);
             context.SaveChanges();
