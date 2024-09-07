@@ -75,6 +75,8 @@
                 Console.WriteLine($"ID: {book.BookId}");
                 Console.WriteLine($"Title: {book.Title}");
                 Console.WriteLine($"Author: {book.Author}");
+                Console.WriteLine($"Stock: {book.Stock}");
+                Console.WriteLine($"Available: {book.Available}");
                 Console.WriteLine();
             }
         }
@@ -101,6 +103,12 @@
         {
             Console.WriteLine("Please enter the book ID: ");
             int bookID = ValidateIntInput();
+
+            if (bookID == -1)
+            {
+                Console.WriteLine("Returning to menu...");
+                return;
+            }
 
             var book = _bookController.GetBook(bookID);
 
@@ -155,6 +163,13 @@
             Console.WriteLine("Please enter the ID of the book you wish to return: ");
 
             int bookID = ValidateIntInput();
+
+            if (bookID == -1)
+            {
+                Console.WriteLine("Returning to menu...");
+                return;
+            }
+
             var book = _bookController.GetBook(bookID);
 
             if (book == null)
