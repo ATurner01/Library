@@ -23,9 +23,8 @@ namespace Library.src
         {
             modelBuilder.Entity<Account>()
                 .HasMany(a => a.Books)
-                .WithOne(a => a.Account)
-                .HasForeignKey(a => a.AccountId)
-                .IsRequired(false);
+                .WithMany(a => a.Accounts)
+                .UsingEntity("BorrowedBooks");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source={DbPath}");
@@ -38,20 +37,23 @@ namespace Library.src
 
         public string Name { get; set; }
 
-        public ICollection<Book> Books { get; } = new List<Book>();
+        public ICollection<Book> Books { get; } = [];
     }
 
-    //TODO: Update to include current number of available books
     public class Book
     {
         public int BookId { get; set; }
 
         public string Title { get; set; }
+
         public string Description { get; set; }
 
         public string Author { get; set; }
 
-        public int? AccountId { get; set; }
-        public Account? Account { get; set; }
+        public bool Available { get; set; }
+
+        public int Stock { get; set; }
+
+        public ICollection<Account> Accounts { get; } = [];
     }
 }

@@ -31,7 +31,7 @@ namespace Library
                 }
             } while (running);
 
-            readDatabase.SaveData(account);
+            //readDatabase.SaveData(account);
         }
     }
 }

@@ -92,6 +92,8 @@ namespace Library.src
         public void AddBook(Account account, Book book)
         {
             using var context = new LibraryContext(_dbPath);
+            context.Accounts.Attach(account);
+            context.Books.Attach(book);
 
             if (account.Books.FirstOrDefault(b => b.BookId == book.BookId) != null)
             {
@@ -99,7 +101,7 @@ namespace Library.src
             }
 
             account.Books.Add(book);
-            book.Account = account;
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -116,20 +118,23 @@ namespace Library.src
             return account.Books;
         }
 
-        //TODO: Do this properly. Currently just deletes book from account, doesn't update "stock" (need to add that too)
+        //TODO: Do this properly. Currently removes relationship between account and book, doesn't update "stock" (need to add that too)
         public void RemoveBook(Account account, Book book)
         {
             using var context = new LibraryContext(_dbPath);
+            context.Accounts.Attach(account);
 
             Book? bookRef = account.Books.FirstOrDefault(b => b.BookId == book.BookId) ?? throw new ArgumentException("Account does not possess this book");
 
             account.Books.Remove(bookRef);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Saves all changes made to an account. This should only be called whenever the account is logged out to avoid unnecessary data I/O
         /// </summary>
         /// <param name="account">The account currently logged in</param>
+        // Currently not used, but kept in case of compatibility issues
         public void SaveData(Account account)
         {
             using var context = new LibraryContext(_dbPath);

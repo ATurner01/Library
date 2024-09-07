@@ -23,7 +23,15 @@ namespace Library {
             db.SaveChanges();
 
             Console.WriteLine("Adding a book");
-            db.Add(new Book { Title = "Book 1", Author = "Author 1", Description = "This is book 1" });
+            db.Add(new Book
+            {
+                Title = "Book 1",
+                Author = "Author 1",
+                Description = "This is book 1",
+                Available = true,
+                Stock = 5
+            }
+            );
             db.SaveChanges();
 
             Console.WriteLine("Withdrawing a book");
@@ -48,11 +56,15 @@ namespace Library {
             for (int i = 0; i < numOfBooks; i++)
             {
                 var bookId = random.Next(1000);
+                var stock = random.Next(10);
+                var available = stock > 0;
                 db.Add(new Book
                 {
                     Title = $"Book {bookId}",
                     Author = $"Author {bookId}",
-                    Description = $"This is book {bookId}"
+                    Description = $"This is book {bookId}",
+                    Available = available,
+                    Stock = stock
                 });
             }
 
