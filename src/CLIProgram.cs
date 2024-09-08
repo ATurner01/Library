@@ -5,15 +5,12 @@ namespace Library.src;
 public class CLIProgram
 {
 
-    private string dbPath;
-	public CLIProgram(string path)
-	{
-        dbPath = path;
-    }
+    private readonly string _dbPath;
+    public CLIProgram(string path) => _dbPath = path;
 
     public void Run()
     {
-        ReadDatabase readDatabase = new(dbPath);
+        ReadDatabase readDatabase = new(_dbPath);
         var running = true;
         var account = readDatabase.GetAccount(1);
 
@@ -23,7 +20,7 @@ public class CLIProgram
             Environment.Exit(1);
         }
 
-        CLI app = new CLI(account, dbPath);
+        CLI app = new CLI(account, _dbPath);
         app.DisplayUI();
 
         do
