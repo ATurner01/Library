@@ -3,11 +3,11 @@ using System.IO;
 
 namespace Library.src
 {
-    public class CLIProgam
+    public class CLIProgram
     {
 
         private readonly string _dbPath;
-        public CLIProgam(string path) => _dbPath = path;
+        public CLIProgram(string path) => _dbPath = path;
 
         public void Run()
         {
