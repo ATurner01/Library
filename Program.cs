@@ -7,8 +7,12 @@ namespace Library
         static void Main(string[] args)
         {
             var dbPath = Path.Join(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "library.db");
-            var cli = new CLIProgram(dbPath);
-            cli.Run();
+
+            if (args[0] == "-cli")
+            {
+                var cli = new CLIProgram(dbPath);
+                cli.Run();
+            }
         }
     }
 }
